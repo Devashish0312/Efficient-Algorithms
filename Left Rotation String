@@ -1,0 +1,18 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	string s;
+	cin>>s;
+	int k;
+	cin>>k;
+	
+	reverse(s.begin(),s.begin()+k);
+	reverse(s.begin()+k,s.end());
+	reverse(s.begin(),s.end());
+	
+	
+	cout<<s;
+}
