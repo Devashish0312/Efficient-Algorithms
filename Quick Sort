@@ -1,53 +1,50 @@
 #include <iostream>
 using namespace std;
 
-void swap(int *a,int *b)
+int partition(int *a,int start,int end)
 {
-	int t = *a;
-	*a = *b;
-	*b = t;
-}
-
-int partition(int a[],int low,int high)
-{
-	int j;
-	int pivot = a[high];
-	int i = low-1;
+	int pivot = a[end];
+	int pIndex = start;
 	
-	for(j=low;j<=high-1;j++)
+	int i,temp;
+	
+	for(i=start;i<end;i++)
 	{
-		if(a[j]<=pivot)
+		if(a[i]<=pivot)
 		{
-			i++;
-			swap(&a[i],&a[j]);
+			temp = a[i];
+			a[i]=a[pIndex];
+			a[pIndex]=temp;
+			
+			pIndex++;
 		}
 	}
 	
-	swap(&a[i+1],&a[high]);
+	temp = a[pIndex];
+	a[pIndex]=a[end];
+	a[end]=temp;
 	
-	return i+1;
+	return pIndex;
 }
 
-void quicksort(int a[],int low,int high)
+void quicksort(int *a,int start,int end)
 {
-	int pi;
-	if(low<high)
+	if(start<end)
 	{
-		pi = partition(a,low,high);		//give the location of the pivot element
-	
-		quicksort(a,low,pi-1);			//Divide acc to pivot
-		quicksort(a,pi+1,high);
-	}
+		int pIndex = partition(a,start,end);
+		quicksort(a,start,pIndex-1);
+		quicksort(a,pIndex+1,end);	
+	}	
 }
 
 int main()
 {
-	int n,i;
+	int n;
 	cin>>n;
 	int a[n];
+	int i;
 	for(i=0;i<n;i++)
 		cin>>a[i];
-	
 	quicksort(a,0,n-1);
 	
 	for(i=0;i<n;i++)
